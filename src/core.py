@@ -140,9 +140,11 @@ class MigrationTarget:
     def from_dict(cls, data: dict[str, Any]) -> "MigrationTarget":
         credentials_data = Credentials(**data["cloud_credentials"])
         if "id" in data and data["id"] is not None:
-            return cls(cloud_type=CloudType(data["cloud_type"]), cloud_credentials=credentials_data, target_vm=Workload.from_dict(data["target_vm"]), id=data["id"])
+            return cls(cloud_type=CloudType(data["cloud_type"]), cloud_credentials=credentials_data,
+                       target_vm=Workload.from_dict(data["target_vm"]), id=data["id"])
         else:
-            return cls(cloud_type=CloudType(data["cloud_type"]), cloud_credentials=credentials_data, target_vm=Workload.from_dict(data["target_vm"]))
+            return cls(cloud_type=CloudType(data["cloud_type"]), cloud_credentials=credentials_data,
+                       target_vm=Workload.from_dict(data["target_vm"]))
 
 
 class MigrationState(str, Enum):
@@ -231,11 +233,11 @@ class Migration:
         storage_data = [MountPoint(**mp) for mp in data["selected_mount_points"]]
         if "id" in data and data["id"] is not None:
             return cls(selected_mount_points=storage_data,
-            source=Workload.from_dict(data["source"]),
-            migration_target=MigrationTarget.from_dict(data["migration_target"]),
-            state=MigrationState(data.get("state", MigrationState.NOT_STARTED.value)), id=data["id"])
+                       source=Workload.from_dict(data["source"]),
+                       migration_target=MigrationTarget.from_dict(data["migration_target"]),
+                       state=MigrationState(data.get("state", MigrationState.NOT_STARTED.value)), id=data["id"])
         else:
             return cls(selected_mount_points=storage_data,
-            source=Workload.from_dict(data["source"]),
-            migration_target=MigrationTarget.from_dict(data["migration_target"]),
-            state=MigrationState(data.get("state", MigrationState.NOT_STARTED.value)))
+                       source=Workload.from_dict(data["source"]),
+                       migration_target=MigrationTarget.from_dict(data["migration_target"]),
+                       state=MigrationState(data.get("state", MigrationState.NOT_STARTED.value)))
